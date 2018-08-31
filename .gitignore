@@ -1,0 +1,8 @@
+CORE/
+plots/
+Looper
+*.so
+*.o
+*.root
+*.txt
+minicondor.py
