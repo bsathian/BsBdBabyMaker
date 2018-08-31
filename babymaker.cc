@@ -44,8 +44,6 @@ void babymaker::cleanVectors()
     gen_muon_p4_->clear();
     gen_muon_v4_->clear();
     gen_pv_->clear();
-
-
 }
 
 int babymaker::fieldCopy(CMS3& cms3)
@@ -89,7 +87,7 @@ void babymaker::makeBabies(TChain *ch)
     size_t nEventsChain = ch->GetEntries();
     cms3.Init(ch);
 
-    for(auto event = 0; event < 100; event++)
+    for(auto event = 0; event < nEventsChain; event++)
     {
         cms3.GetEntry(event);
         nEventsTotal++;
