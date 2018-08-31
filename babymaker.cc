@@ -37,6 +37,7 @@ void babymaker::cleanVectors()
     ll_muon_p4_->clear();
     lt_muon_p4_->clear();
     ll_muon_id_->clear();
+    lt_muon_id_->clear();
     lv_->clear();
     pv_cov_->clear();
     lv_cov_->clear();
