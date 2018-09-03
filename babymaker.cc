@@ -45,6 +45,7 @@ void babymaker::cleanVectors()
     gen_muon_p4_->clear();
     gen_muon_v4_->clear();
     gen_pv_->clear();
+    completedIdx.clear();
 }
 
 int babymaker::fieldCopy(CMS3& cms3)
@@ -85,6 +86,14 @@ int babymaker::fieldCopy(CMS3& cms3)
                 continue;
             if(abs(cms3.genps_id_mother().at(i)) == 531)
             {
+                /*CMS3 has duplicate entries containing the same
+                 index! We need to check if the index is already pushed*/
+                if(std::find(completedIdx.begin(),completedIdx.end(),i) != completedIdx.end()) //exists in vector
+                    continue;
+                completedIdx.push_back(i);
+
+
+                
                 std::cout<<"index="<<i<<std::endl;
                 gen_muon_p4_->push_back(cms3.genps_p4().at(i));
                 gen_muon_v4_->push_back(cms3.genps_prod_vtx().at(i));
