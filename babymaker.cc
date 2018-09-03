@@ -25,8 +25,9 @@ babymaker::babymaker(std::string fileName)
     Events->Branch("lep_vtx_cov",&lv_cov_);
 
     gen_muon_p4_ = new std::vector<LorentzVector>;
-    //Events->Branch("gen_muon_p4",&gen_muon_p4_);
+    Events->Branch("gen_muon_p4",&gen_muon_p4_);
     gen_muon_v4_ = new std::vector<LorentzVector>;
+    Events->Branch("gen_muon_v4",&gen_muon_v4_);
     gen_pv_ = new std::vector<LorentzVector>;
     //Events->Branch("gen_PV",&gen_pv_);
     
@@ -76,6 +77,20 @@ int babymaker::fieldCopy(CMS3& cms3)
     }
     
     //Massaging for gen stuff
+   if(flag == 1)
+   {
+       for(auto i:cms3.mus_mc3idx())
+       {
+            if(i<0) //-9999
+                continue;
+            if(abs(cms3.genps_id_mother().at(i)) == 531)
+            {
+                gen_muon_p4_->push_back(cms3.genps_p4().at(i));
+                gen_muon_v4_->push_back(cms3.genps_prod_vtx().at(i));
+            }
+       }
+   }
+
     
 
     return flag; 
