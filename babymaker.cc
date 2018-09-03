@@ -94,7 +94,6 @@ int babymaker::fieldCopy(CMS3& cms3)
 
 
                 
-                std::cout<<"index="<<i<<std::endl;
                 gen_muon_p4_->push_back(cms3.genps_p4().at(i));
                 gen_muon_v4_->push_back(cms3.genps_prod_vtx().at(i));
             }
