@@ -98,6 +98,9 @@ int babymaker::fieldCopy(CMS3& cms3)
                 gen_muon_v4_->push_back(cms3.genps_prod_vtx().at(i));
             }
        }
+
+       if(gen_muon_v4_->empty()) //skip entries without a gen muon
+           flag = 0;
    }
 
     
