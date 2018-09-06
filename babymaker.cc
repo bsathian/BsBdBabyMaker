@@ -88,7 +88,7 @@ int babymaker::fieldCopy(CMS3& cms3)
         gen_ll_index = cms3.mus_mc3idx().at(mus_ll_index);
         gen_lt_index = cms3.mus_mc3idx().at(mus_lt_index);
 
-        if(gen_ll_index < 0 || gen_lt_index < 0)
+        if(gen_ll_index < 0 || gen_lt_index < 0 || gen_ll_index == gen_lt_index)
             continue;
 
         //Duplicate checking
