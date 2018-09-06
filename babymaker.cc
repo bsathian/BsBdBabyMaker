@@ -57,12 +57,19 @@ int babymaker::fieldCopy(CMS3& cms3)
     int flag = 0;
     
     //Massaging for lv_cov
+    LorentzVector dilepP4;
     for(size_t i = 0; i < cms3.hyp_FVFit_status().size();i++)
     {
         if(cms3.hyp_FVFit_status().at(i) != 0)
             continue;
         if((cms3.hyp_ll_id().at(i) * cms3.hyp_lt_id().at(i)) != -169)
             continue;
+        //mass cut
+        dilepP4 = cms3.hyp_ll_p4().at(i) + cms3.hyp_lt_p4().at(i);
+
+        if(!(dilepP4.M() > 4.5 && dilepP4.M() < 6.5))
+                continue;
+
         flag = 1; //Valid vertex - status 1 
 
         ll_muon_p4_->push_back(cms3.hyp_ll_p4().at(i));
