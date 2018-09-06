@@ -34,6 +34,7 @@ class babymaker
     std::vector<LorentzVector>* lt_muon_p4_;
     std::vector<int> *ll_muon_id_;
     std::vector<int> *lt_muon_id_;
+    std::vector<int> *muon_mother_id_;
 
     LorentzVector *pv_;
 
