@@ -64,6 +64,10 @@ int babymaker::fieldCopy(CMS3& cms3)
             continue;
         if((cms3.hyp_ll_id().at(i) * cms3.hyp_lt_id().at(i)) != -169)
             continue;
+
+        //muon eta cut
+        if(!(abs(cms3.hyp_ll_p4().at(i).Eta()) < 1.4 && abs(cms3.hyp_lt_p4().at(i).Eta()) < 1.4))
+            continue;
         //mass cut
         dilepP4 = cms3.hyp_ll_p4().at(i) + cms3.hyp_lt_p4().at(i);
 
