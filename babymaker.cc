@@ -45,7 +45,8 @@ void babymaker::cleanVectors()
     gen_muon_p4_->clear();
     gen_muon_v4_->clear();
     gen_pv_->clear();
-    completedIdx.clear();
+    completedllIdx.clear();
+    completedltIdx.clear();
 }
 
 int babymaker::fieldCopy(CMS3& cms3)
@@ -55,6 +56,7 @@ int babymaker::fieldCopy(CMS3& cms3)
 
     /*Sends status 1 if any valid vertex found*/
     int flag = 0;
+    int gen_ll_index,gen_lt_index,mus_ll_index,mus_lt_index;
     
     //Massaging for lv_cov
     LorentzVector dilepP4;
@@ -74,13 +76,54 @@ int babymaker::fieldCopy(CMS3& cms3)
         if(!(dilepP4.M() > 4.5 && dilepP4.M() < 6.5))
                 continue;
 
-        flag = 1; //Valid vertex - status 1 
+        //MuonMaker level - positions in the mus_mc3idx vector
+        mus_ll_index = cms3.hyp_ll_index().at(i); 
+        mus_lt_index = cms3.hyp_lt_index().at(i);
 
+        //Fail if lt and ll indices are the same, or lt/ll indices at -9999
+        if(mus_lt_index < 0 || mus_ll_index < 0 || mus_ll_index == mus_lt_index)
+            continue;
+
+        //Generator level - positions in the genps vector
+        gen_ll_index = cms3.mus_mc3idx().at(mus_ll_index);
+        gen_lt_index = cms3.mus_mc3idx().at(mus_lt_index);
+
+        if(gen_ll_index < 0 || gen_lt_index < 0)
+            continue;
+
+        //Duplicate checking
+        if(std::find(completedllIdx.begin(),completedllIdx.end(),gen_ll_index) != completedllIdx.end()) //already done!
+            continue;
+        if(std::find(completedltIdx.begin(),completedltIdx.end(),gen_lt_index) != completedltIdx.end()) //lt also already done!
+            continue;
+        
+
+
+        //Checking if the muons came from B meson
+        if(abs(cms3.genps_id_mother().at(gen_ll_index)) != 531 || abs(cms3.genps_id_mother().at(gen_lt_index)) != 531)
+            continue;
+        
+        
+        completedllIdx.push_back(gen_ll_index);
+        completedltIdx.push_back(gen_lt_index);
+        
+        flag = 1;
+        
         ll_muon_p4_->push_back(cms3.hyp_ll_p4().at(i));
         lt_muon_p4_->push_back(cms3.hyp_lt_p4().at(i));
         lv_->push_back(cms3.hyp_FVFit_v4().at(i));
         ll_muon_id_->push_back(cms3.hyp_ll_id().at(i));
         lt_muon_id_->push_back(cms3.hyp_lt_id().at(i));
+
+        //push gen level stuff
+        gen_muon_p4_->push_back(cms3.genps_p4().at(gen_ll_index));
+        gen_muon_v4_->push_back(cms3.genps_prod_vtx().at(gen_ll_index));
+        gen_muon_p4_->push_back(cms3.genps_p4().at(gen_lt_index));
+        gen_muon_v4_->push_back(cms3.genps_prod_vtx().at(gen_lt_index));
+
+
+
+
 
         float temp[] = {cms3.hyp_FVFit_v4cxx().at(i), cms3.hyp_FVFit_v4cxy().at(i), cms3.hyp_FVFit_v4czx().at(i), cms3.hyp_FVFit_v4cxy().at(i), cms3.hyp_FVFit_v4cyy().at(i), cms3.hyp_FVFit_v4czy().at(i), cms3.hyp_FVFit_v4czx().at(i), cms3.hyp_FVFit_v4czy().at(i), cms3.hyp_FVFit_v4czz().at(i)};
         
@@ -89,30 +132,6 @@ int babymaker::fieldCopy(CMS3& cms3)
     }
     
     //Massaging for gen stuff
-   if(flag == 1)
-   {
-       for(auto i:cms3.mus_mc3idx())
-       {
-            if(i<0) //-9999
-                continue;
-            if(abs(cms3.genps_id_mother().at(i)) == 531)
-            {
-                /*CMS3 has duplicate entries containing the same
-                 index! We need to check if the index is already pushed*/
-                if(std::find(completedIdx.begin(),completedIdx.end(),i) != completedIdx.end()) //exists in vector
-                    continue;
-                completedIdx.push_back(i);
-
-
-                
-                gen_muon_p4_->push_back(cms3.genps_p4().at(i));
-                gen_muon_v4_->push_back(cms3.genps_prod_vtx().at(i));
-            }
-       }
-
-       if(gen_muon_v4_->empty()) //skip entries without a gen muon
-           flag = 0;
-   }
 
     
 

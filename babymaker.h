@@ -44,7 +44,8 @@ class babymaker
     //gen stuff
     std::vector<LorentzVector>* gen_muon_p4_;
     std::vector<LorentzVector>* gen_muon_v4_;
-    std::vector<int> completedIdx; //also check unordered map
+    std::vector<int> completedllIdx; //also check unordered map
+    std::vector<int> completedltIdx;
     std::vector<LorentzVector>* gen_pv_;
 
     void cleanVectors(); 
