@@ -131,7 +131,6 @@ int babymaker::fieldCopy(CMS3& cms3)
         lv_cov_->push_back(tempVec);
     }
     
-    //Massaging for gen stuff
 
     
 
