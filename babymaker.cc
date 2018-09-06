@@ -10,6 +10,8 @@ babymaker::babymaker(std::string fileName)
     Events->Branch("ll_id",&ll_muon_id_);
     lt_muon_id_ = new std::vector<int>;
     Events->Branch("lt_id",&lt_muon_id_);
+    muon_mother_id_= new std::vector<int>;
+    Events->Branch("muon_mother_id",&muon_mother_id_);
     
     ll_muon_p4_ = new std::vector<LorentzVector>;
     Events->Branch("ll_muon_p4",&ll_muon_p4_);
@@ -47,6 +49,7 @@ void babymaker::cleanVectors()
     gen_pv_->clear();
     completedllIdx.clear();
     completedltIdx.clear();
+    muon_mother_id_->clear();
 }
 
 int babymaker::fieldCopy(CMS3& cms3)
@@ -121,7 +124,8 @@ int babymaker::fieldCopy(CMS3& cms3)
         gen_muon_p4_->push_back(cms3.genps_p4().at(gen_lt_index));
         gen_muon_v4_->push_back(cms3.genps_prod_vtx().at(gen_lt_index));
 
-
+        muon_mother_id_->push_back(cms3.genps_id_mother().at(gen_ll_index));
+        muon_mother_id_->push_back(cms3.genps_id_mother().at(gen_lt_index));
 
 
 
