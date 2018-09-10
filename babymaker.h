@@ -14,8 +14,8 @@
 # include "TH3.h"
 
 //CMS3
-# include "CORE/CMS3.h"
-# include "CORE/MuonSelections.h"
+# include "CMS3.h"
+# include "MuonSelections.h"
 
 # include <iostream>
 # include <vector>
