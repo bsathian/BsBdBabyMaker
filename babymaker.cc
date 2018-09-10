@@ -55,6 +55,8 @@ void babymaker::cleanVectors()
     completedllIdx.clear();
     completedltIdx.clear();
     muon_mother_id_->clear();
+    muon_hits_->clear();
+    muon_pixelHits_->clear();
 }
 
 int babymaker::fieldCopy(CMS3& cms3)
