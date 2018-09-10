@@ -1,6 +1,6 @@
 CORE/
 plots/
-Looper
+babymaker
 *.so
 *.o
 *.root
