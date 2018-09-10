@@ -1,5 +1,6 @@
 # include "babymaker.h"
 # include "CORE/CMS3.cc"
+# include "CORE/MuonSelections.cc"
 
 babymaker::babymaker(std::string fileName)
 {
@@ -108,6 +109,11 @@ int babymaker::fieldCopy(CMS3& cms3)
             continue;
         
         
+        //Good muon selection
+       if(!(isLooseMuonPOG(mus_ll_index) && isLooseMuonPOG(mus_lt_index)))
+           continue;
+
+     
         completedllIdx.push_back(gen_ll_index);
         completedltIdx.push_back(gen_lt_index);
         
