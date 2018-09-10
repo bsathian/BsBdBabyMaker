@@ -8,7 +8,7 @@ CFLAGS = -g -std=c++1y
 all: 
 
 	$(CC) $(CFLAGS) -I${ROOTSYS}/include -c  *.cc $(ROOTLIBS)
-	$(CC) *.o CORE/*.o -o babymaker
+	#$(CC) *.o CORE/*.o -o babymaker
 
 
 clean:
