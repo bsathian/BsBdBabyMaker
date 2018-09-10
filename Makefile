@@ -7,7 +7,7 @@ CFLAGS = -g -std=c++1y
 
 all: 
 
-	$(CC) $(CFLAGS) -I${ROOTSYS}/include -I./CORE   *.cc $(ROOTLIBS)
+	$(CC) $(CFLAGS) -I${ROOTSYS}/include -I./CORE -c *.cc 
 	$(CC) *.o $(ROOTLIBS) CORE/CMS3_CORE.so -o babymaker
 
 
