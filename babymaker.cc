@@ -1,4 +1,5 @@
 # include "babymaker.h"
+# include "CORE/CMS3.cc"
 
 babymaker::babymaker(std::string fileName)
 {
