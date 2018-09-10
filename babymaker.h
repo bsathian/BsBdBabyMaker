@@ -14,7 +14,7 @@
 # include "TH3.h"
 
 //CMS3
-# include "CMS3.h"
+# include "CORE/CMS3.h"
 
 # include <iostream>
 # include <vector>
