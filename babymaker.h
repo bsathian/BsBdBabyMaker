@@ -15,6 +15,7 @@
 
 //CMS3
 # include "CORE/CMS3.h"
+# include "CORE/MuonSelections.h"
 
 # include <iostream>
 # include <vector>
@@ -48,6 +49,10 @@ class babymaker
     std::vector<int> completedllIdx; //also check unordered map
     std::vector<int> completedltIdx;
     std::vector<LorentzVector>* gen_pv_;
+
+    //hit stuff
+    std::vector<int> *muon_hits_;
+    std::vector<int> *muon_pixelHits_;
 
     void cleanVectors(); 
     public:

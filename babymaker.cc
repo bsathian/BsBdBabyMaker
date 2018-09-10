@@ -33,6 +33,11 @@ babymaker::babymaker(std::string fileName)
     gen_muon_v4_ = new std::vector<LorentzVector>;
     Events->Branch("gen_muon_v4",&gen_muon_v4_);
     gen_pv_ = new std::vector<LorentzVector>;
+
+    muon_hits_ = new std::vector<int>;
+    Events->Branch("muon_hits",&muon_hits_);
+    muon_pixelHits_ = new std::vector<int>;
+    Events->Branch("muon_pixelhits",&muon_pixelHits_);
     //Events->Branch("gen_PV",&gen_pv_);
     
 }
@@ -134,7 +139,11 @@ int babymaker::fieldCopy(CMS3& cms3)
         muon_mother_id_->push_back(cms3.genps_id_mother().at(gen_ll_index));
         muon_mother_id_->push_back(cms3.genps_id_mother().at(gen_lt_index));
 
-
+        
+        muon_hits_->push_back(cms3.mus_validHits().at(mus_ll_index));
+        muon_hits_->push_back(cms3.mus_validHits().at(mus_lt_index));
+        muon_pixelHits_->push_back(cms3.mus_validPixelHits().at(mus_ll_index));
+        muon_pixelHits_->push_back(cms3.mus_validPixelHits().at(mus_lt_index));
 
         float temp[] = {cms3.hyp_FVFit_v4cxx().at(i), cms3.hyp_FVFit_v4cxy().at(i), cms3.hyp_FVFit_v4czx().at(i), cms3.hyp_FVFit_v4cxy().at(i), cms3.hyp_FVFit_v4cyy().at(i), cms3.hyp_FVFit_v4czy().at(i), cms3.hyp_FVFit_v4czx().at(i), cms3.hyp_FVFit_v4czy().at(i), cms3.hyp_FVFit_v4czz().at(i)};
         
